@@ -41,9 +41,32 @@ ggsave('body_mass_plot.png', p,
        width = 8, height = 8,
        units = "cm")
 
+library(ggimage)
 
+library(grid)
+library(png)
+
+bg <- rasterGrob(
+  readPNG("data/ijsbeer.png"),
+  width = unit(1, "npc"),
+  height = unit(1, "npc"),
+  interpolate = TRUE
+)
+
+penguins %>% 
+  ggplot(aes(x = bill_length_mm, y = bill_length_mm / body_mass_g)) +
+  annotation_custom(bg) +
+  geom_point() +
+  geom_image(aes(color = island, image = "data/penguin.png"), size = 0.07, alpha = 0.8) + 
+  geom_image(aes(image = "data/penguin.png"), size = 0.05, alpha = 0.6)+ 
+  theme_void()
+    
   
+
+
+penguins %>% 
+  ggplot(aes(x = bill_length_mm, y = bill_length_mm / body_mass_g)) +
   
-  
+  geom_point()
   
 
